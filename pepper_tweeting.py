@@ -1,8 +1,7 @@
 # coding:utf-8
 
-from __future__ import absolute_import, print_function
-
 from naoqi import ALProxy
+
 import json
 import re
 
@@ -20,7 +19,7 @@ class StdOutListener(StreamListener):
         tweet = Cleanser.cleanse(raw_tweet)
         print("%s -> %s" % (raw_tweet, tweet))
 
-        tts = ALProxy("ALTextToSpeech", "192.168.3.26", 9559)
+        tts = ALProxy("ALTextToSpeech", "192.168.1.98", 9559)
         tts.say(str(tweet.encode("utf-8")))
 
         return True
@@ -30,9 +29,11 @@ class StdOutListener(StreamListener):
 
 class Cleanser():
 
-    @staticmethod
-    def cleanse(tweet):
+    @classmethod
+    def cleanse(cls, tweet):
 
+        # remove RT:
+        tweet = re.sub(r'(RT)', ' ', tweet)
         # remove URL
         tweet = re.sub(r'(?:^|[\s　]*)((?:https?|ftp)://[\w/:%#\$&\?\(\)~\.=\+\-]+)', ' ', tweet)
         # remove hash tag
