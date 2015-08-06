@@ -51,10 +51,10 @@ class Cleanser(object):
 
 if __name__ == "__main__":
     pepper_host = sys.argv[1]  # e.g. "192.168.0.2"
-    hash_tag = sys.argv[2]  # e.g. ""#pepper_say"
+    hash_tag = sys.argv[2]  # e.g. "#pepper_say"
     pepper_port = 9559
 
-    l = StdOutListener()
+    l = StdOutListener(pepper_host, pepper_port)
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
 
