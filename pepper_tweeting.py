@@ -20,12 +20,15 @@ class StdOutListener(StreamListener):
 
     def on_data(self, data):
         d = json.loads(data)
+
+        screen_name = d["user"]["screen_name"]
         raw_tweet = d["text"]
 
         tweet = Cleanser.cleanse(raw_tweet)
-        print("%s -> %s" % (raw_tweet, tweet))
+        print("@%s %s => %s" % (screen_name, raw_tweet, tweet))
 
-        tts = ALProxy("ALTextToSpeech", self.pepper_host, self.pepper_port)
+        # tts = ALProxy("ALTextToSpeech", self.pepper_host, self.pepper_port)
+        tts = ALProxy("ALAnimatedSpeech", self.pepper_host, self.pepper_port)
         tts.say(str(tweet.encode("utf-8")))
 
         return True
